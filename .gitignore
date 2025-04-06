@@ -1,0 +1,56 @@
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+*.pdb
+*.so
+*.egg
+*.egg-info/
+dist/
+build/
+
+# Django
+*.log
+*.pot
+*.pyc
+local_settings.py
+db.sqlite3
+db.sqlite3-journal
+media/
+staticfiles/
+debug.log
+
+# Django migrations
+*/migrations/*.py
+*/migrations/*.pyc
+
+# Celery
+celerybeat-schedule.*
+celerybeat.pid
+
+# Environment
+.env
+*.env
+.env.*
+
+# VS Code
+.vscode/
+
+# OS-specific
+.DS_Store
+Thumbs.db
+
+# Virtual environment
+venv/
+env/
+stockenv/
+ENV/
+.venv/
+
+# Others
+*.bak
+*.swp
+.idea/
+*.iml
+demo.py

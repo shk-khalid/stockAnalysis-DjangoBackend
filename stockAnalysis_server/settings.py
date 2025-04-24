@@ -17,6 +17,10 @@ SECRET_KEY = os.getenv('SECRET_KEY')
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = os.getenv('DEBUG', 'False') == 'True'
 
+# Allowed Hosts
+ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS").split(",") if os.getenv("ALLOWED_HOSTS") else []
+
+
 # Application definition
 INSTALLED_APPS = [
     # Django default apps
@@ -158,5 +162,8 @@ CHANNEL_LAYERS = {
 
 # CORS settings
 CORS_ALLOW_ALL_ORIGINS = False  
-CORS_ALLOWED_ORIGINS = os.getenv("ALLOWED_HOSTS").split(",") if os.getenv("ALLOWED_HOSTS") else []
+CORS_ALLOWED_ORIGINS = os.getenv("CORS_ALLOWED_ORIGINS").split(",") if os.getenv("CORS_ALLOWED_ORIGINS") else []
 CORS_ALLOW_CREDENTIALS = True
+
+# Allowed Hosts
+ALLOWED_HOSTS = os.getenv("ALLOWED_HOSTS").split(",") if os.getenv("ALLOWED_HOSTS") else []

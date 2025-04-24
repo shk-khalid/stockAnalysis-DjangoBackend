@@ -8,8 +8,10 @@ from .views import (
     RemoveStockFromWatchlistView,
     WatchlistOverviewView,
     WatchlistDetailOverviewView,
+    TogglePinStockView,
     AlertCreateView,
     AlertDeleteView,
+    
 )
 
 # HTTP URL patterns
@@ -21,8 +23,10 @@ urlpatterns = [
     path('watchlists/<int:watchlist_id>/remove-stock/<int:stock_id>/', RemoveStockFromWatchlistView.as_view(), name='remove-stock-watchlist'),
     path('watchlist/overview/', WatchlistOverviewView.as_view(), name='watchlist-overview'),
     path('watchlists/<int:watchlist_id>/overview/', WatchlistDetailOverviewView.as_view(), name='watchlist-detail-overview'),
+    path('watchlists/<int:watchlist_id>/stocks/<int:stock_id>/toggle-pin/', TogglePinStockView.as_view(), name='toggle-pin-stock'),
     path('alerts/<int:stock_id>/add/', AlertCreateView.as_view(), name='add-alert'),
     path('alerts/<int:alert_id>/delete/', AlertDeleteView.as_view(), name='delete-alert'),
+    
 
 ]
 

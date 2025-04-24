@@ -249,6 +249,7 @@ class WatchlistDetailOverviewView(APIView):
             print(f"Alerts for {stock.symbol}: {alerts}")
 
             stock_overview = {
+                "id": stock.id,
                 "symbol": stock.symbol,
                 "name": stock.name,
                 "price": current_price,
@@ -436,6 +437,49 @@ class RemoveStockFromWatchlistView(APIView):
         return Response(
             {
                 "message": "Stock removed from watchlist successfully.",
+                "stock": StockSerializer(stock).data
+            },
+            status=status.HTTP_200_OK
+        )
+
+# ----- 7. Pin/Unpin the Stock from Watchlist Endpoint -----
+class TogglePinStockView(APIView):
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, watchlist_id, stock_id, *args, **kwargs):
+        # Validate watchlist exists and belongs to user
+        try:
+            watchlist = Watchlist.objects.get(id=watchlist_id, user=request.user)
+        except Watchlist.DoesNotExist:
+            return Response(
+                {"error": "Watchlist not found."},
+                status=status.HTTP_404_NOT_FOUND
+            )
+
+        # Validate stock exists and belongs to user
+        try:
+            stock = Stock.objects.get(id=stock_id, user=request.user)
+        except Stock.DoesNotExist:
+            return Response(
+                {"error": "Stock not found."},
+                status=status.HTTP_404_NOT_FOUND
+            )
+
+        # Ensure the stock is in this watchlist
+        if stock not in watchlist.stocks.all():
+            return Response(
+                {"error": "Stock is not in this watchlist."},
+                status=status.HTTP_400_BAD_REQUEST
+            )
+
+        # Toggle the pin flag and save
+        stock.is_pinned = not stock.is_pinned
+        stock.save()
+
+        action = "pinned" if stock.is_pinned else "unpinned"
+        return Response(
+            {
+                "message": f"Stock {action} successfully.",
                 "stock": StockSerializer(stock).data
             },
             status=status.HTTP_200_OK
